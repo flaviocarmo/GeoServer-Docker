@@ -15,14 +15,22 @@ GS_VERSION=2.18
 GS_VERSION_MINOR=1
 
 # Add in selected plugins.  Comment out or modify as required
-plugins=(control-flow inspire monitor css ysld web-resource sldservice imagemosaic-jdbc backup-restore charts feature-pregeneralized gdal geostyler grib printing mbstyle importer gwc-s3 gwc-distributed pyramid querylayer s3-geotiff vectortiles )
+plugins=(control-flow inspire monitor css ysld web-resource sldservice charts feature-pregeneralized gdal grib printing mbstyle importer pyramid querylayer vectortiles )
+community_plugins=(imagemosaic-jdbc backup-restore geostyler gwc-s3 gwc-distributed s3-geotiff )
 
 for p in "${plugins[@]}"
 do 
 	if [ ! -f resources/plugins/geoserver-${p}-plugin.zip ]
 	then
-		#wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/${GS_VERSION}/extensions/geoserver-${GS_VERSION}-${p}-plugin.zip -O resources/plugins/geoserver-${p}-plugin.zip
-		wget -c https://build.geoserver.org/geoserver/2.18.x/community-latest/geoserver-${GS_VERSION}-SNAPSHOT-${p}-plugin.zip -O resources/plugins/geoserver-${p}-plugin.zip
+		wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/${GS_VERSION}.${GS_VERSION_MINOR}/extensions/geoserver-${GS_VERSION}.${GS_VERSION_MINOR}-${p}-plugin.zip -O resources/plugins/geoserver-${p}-plugin.zip
+	fi
+done
+
+for p in "${community_plugins[@]}"
+do 
+	if [ ! -f resources/plugins/geoserver-${p}-plugin.zip ]
+	then
+		wget -c https://build.geoserver.org/geoserver/${GS_VERSION}.x/community-latest/geoserver-${GS_VERSION}-SNAPSHOT-${p}-plugin.zip -O resources/plugins/geoserver-${p}-plugin.zip
 	fi
 done
 
